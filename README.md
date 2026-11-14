@@ -1,34 +1,61 @@
 # AFTERLIFE
 
-Android application for lost-phone protection and digital legacy management.
+تطبيق Android لإدارة حماية الهاتف والإرث الرقمي بطريقة تحترم الخصوصية وموافقة صاحب الجهاز.
 
-## Current milestone: Phase 1 — Engineering foundation
+## الحالة الحالية
 
-This commit establishes the Android/Gradle foundation and a Clean Architecture package layout. Feature behavior and final UI are intentionally not implemented yet.
+### المرحلة 1 — الأساس الهندسي
+- Kotlin وJetpack Compose وMaterial 3
+- تقسيم الحزم إلى `core`, `domain`, `data`, و`feature`
+- Gradle Wrapper مرفق بإصدار Gradle 8.9
+- Java 17 وAndroid SDK 35
 
-## Stack
-- Kotlin
-- Jetpack Compose + Material 3
-- Navigation Compose (dependency prepared for the UI phase)
-- AndroidX lifecycle
-- Minimum Android API 26; compile/target API 35
-- Java 17
+### المرحلة 2 — الواجهات العربية
+- لوحة رئيسية ومركز حماية
+- شاشة الشخص الموثوق
+- شاشة العثور على الهاتف
+- شاشة الخزنة الرقمية
+- شاشة الإرث الرقمي والإعدادات
+- دعم RTL وثيم ألوان مخصص
 
-## Architecture
-The initial app uses a feature-oriented Clean Architecture layout:
-- `core/`: shared platform and design-system code
-- `domain/`: business models and repository contracts
-- `data/`: implementations and local persistence
-- `feature/`: presentation code grouped by feature
+**تنبيه:** الواجهات الحالية نموذج تفاعلي أولي. لا يوجد بعد إرسال SMS فعلي أو تحديد موقع أو تخزين ملفات مشفر أو تنفيذ تسليم الإرث.
 
-Planned feature areas:
-- trusted contact
-- SMS-based lost-phone recovery
-- encrypted file vault
-- digital legacy
+## البناء
 
-## Build
-Open the repository in Android Studio (JDK 17, Android SDK 35) and sync Gradle. The Gradle wrapper is not included in this initial foundation commit; generate it from Android Studio or with a local Gradle installation before command-line builds.
+المتطلبات:
+- Android Studio حديث
+- JDK 17
+- Android SDK Platform 35
 
-## Security baseline
-No SMS receiver, location collection, file access, death verification, or data deletion is enabled in this phase. Those capabilities will be added only in their respective milestones with explicit user consent and platform-compliant permissions.
+من جذر المشروع:
+
+```bash
+./gradlew assembleDebug
+./gradlew testDebugUnitTest
+```
+
+على Windows استخدم `gradlew.bat`.
+
+## خريطة الحزم
+
+- `core/designsystem`: الثيم ومكونات التصميم المشتركة
+- `domain/model`: نماذج المجال
+- `domain/repository`: عقود الوصول إلى البيانات
+- `data`: تنفيذ التخزين ومصادر البيانات
+- `feature`: شاشات وميزات التطبيق
+
+## مراحل التنفيذ القادمة
+
+1. إكمال تجربة الواجهات وحالات الإدخال والتحقق
+2. بناء ربط الشخص الموثوق بموافقة الطرفين
+3. تنفيذ استعادة الهاتف عبر SMS موثق تشفيرياً مع مراعاة قيود Android
+4. بناء خزنة محلية مشفرة وقفل آمن
+5. تنفيذ الإرث الرقمي مع تحقق موثوق متعدد الخطوات
+6. اختبارات أمنية ووظيفية وتجهيز إصدار تجريبي
+
+## مبادئ الأمان
+
+- لا تتبع خفي ولا وصول دون موافقة صاحب الجهاز.
+- لا يُعتبر الخمول وحده دليلاً على الوفاة.
+- لا تحفظ كلمات المرور أو الملفات الحساسة كنص صريح.
+- لا تُتاح بيانات الإرث إلا بعد تحقق موثوق وصلاحيات محددة.
